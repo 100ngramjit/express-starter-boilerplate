@@ -6,7 +6,7 @@ const app = express();
 
 const PORT = 3001;
 
-const schema = z.string();
+const schema = z.string().min(4).max(12);
 //after below line every request can access express.json() , if we put any middleware in app.use , all requests below the line can access it and we dont need to pass it separately
 app.use(express.json());
 
@@ -21,7 +21,7 @@ app.listen(PORT, () => console.log(`its alive on http://localhost:${PORT}`));
 
 //   if (!username || username.length <= 3) {
 //     res.status(404).json({
-//       status: "404",
+//        status: "404",
 //       msg: "Invalid Username/ Username not found",
 //     });
 //   } else {
