@@ -7,6 +7,7 @@ const app = express();
 const PORT = 3001;
 
 const schema = z.string().min(4).max(12);
+const idSchema = z.number().min(1).max(99);
 //after below line every request can access express.json() , if we put any middleware in app.use , all requests below the line can access it and we dont need to pass it separately
 app.use(express.json());
 
@@ -30,10 +31,11 @@ app.listen(PORT, () => console.log(`its alive on http://localhost:${PORT}`));
 // }
 
 function idValidatorMiddleware(req, res, next) {
-  const id = req.params.id;
-  if (isNaN(id) || Number(id) > 100) {
+  const id = Number(req.params.id);
+  const response = idSchema.safeParse(id);
+  if (!response.sucesss) {
     res.json({
-      msg: "invalid id",
+      msg: response,
     });
   } else {
     next();
@@ -62,6 +64,7 @@ app.get("/", (req, res) => {
 
 app.get("/:id", idValidatorMiddleware, (req, res) => {
   const { id } = req.params;
+
   res.json({
     msg: `This is the ID : ${id}`,
   });
