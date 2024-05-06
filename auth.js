@@ -39,11 +39,7 @@ function verifyJwt(token) {
 
 function decodeJwt(token) {
   const decoded = jwt.decode(token);
-  if (decoded) {
-    return true;
-  } else {
-    return false;
-  }
+  return decoded;
 }
 
 app.get("/helloworld", (req, res) => {
@@ -59,5 +55,19 @@ app.get("/helloworld", (req, res) => {
     res.json({
       Token: responseMessage,
     });
+  }
+});
+
+app.get("/profile", (req, res) => {
+  if (!req.headers || !req.headers.authorization) {
+    res.status(400).json({ error: "Token is required" });
+  }
+  let token = req.headers.authorization.split(" ")[1];
+  if (verifyJwt(token)) {
+    res.json({
+      msg: decodeJwt(token),
+    });
+  } else {
+    res.status(400).json({ error: "Invalid token" });
   }
 });
