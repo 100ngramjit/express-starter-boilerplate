@@ -4,7 +4,7 @@ const express = require("express");
 const z = require("zod");
 const app = express();
 
-const PORT = 3001;
+const PORT = 3000;
 
 const schema = z.string().min(4).max(12);
 const idSchema = z.number().min(1).max(99);
@@ -33,7 +33,7 @@ app.listen(PORT, () => console.log(`its alive on http://localhost:${PORT}`));
 function idValidatorMiddleware(req, res, next) {
   const id = Number(req.params.id);
   const response = idSchema.safeParse(id);
-  if (!response.sucesss) {
+  if (!response.success) {
     res.json({
       msg: response,
     });
@@ -58,7 +58,7 @@ app.get("/helloworld", (req, res) => {
 
 app.get("/", (req, res) => {
   res.json({
-    msg: "Welcome to the API",
+    msg: "Welcome",
   });
 });
 

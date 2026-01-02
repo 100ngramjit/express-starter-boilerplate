@@ -5,7 +5,7 @@ const app = express();
 
 app.use(express.json());
 
-const PORT = 3001;
+const PORT = 3000;
 
 app.listen(PORT, () => console.log(`its alive on http://localhost:${PORT}`));
 
@@ -39,10 +39,11 @@ function verifyJwt(token) {
 
 function decodeJwt(token) {
   const decoded = jwt.decode(token);
+  console.log(decoded);
   return decoded;
 }
 
-app.get("/helloworld", (req, res) => {
+app.get("/signin", (req, res) => {
   if (!req.body || !req.body.username || !req.body.password) {
     return res.status(400).json({ error: "Username/password is required" });
   }
@@ -68,6 +69,8 @@ app.get("/profile", (req, res) => {
       msg: decodeJwt(token),
     });
   } else {
-    res.status(400).json({ error: "Invalid token" });
+    res
+      .status(400)
+      .json({ error: "Invalid token", tk: req.headers.authorization });
   }
 });
