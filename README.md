@@ -7,10 +7,22 @@ A comprehensive Express.js boilerplate project featuring request validation with
 - Node.js installed on your machine.
 - npm (Node Package Manager).
 
+## Environment Setup
+
+Create a `.env` file in the root directory with the following variables:
+
+```env
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+GOOGLE_CALLBACK_URL=your_google_callback_url
+JWT_SECRET=your_jwt_secret
+```
+
 ## Installation
 
 1. Clone the repository.
-2. Install dependencies:
+2. Create and configure your `.env` file.
+3. Install dependencies:
 
 ```bash
 npm install
@@ -29,7 +41,7 @@ This project contains two distinct entry points:
 # Production mode
 npm start
 
-# Development mode (with watch)
+# Development mode (with watch) - Runs auth.js
 npm run dev
 ```
 
@@ -92,3 +104,23 @@ The server runs on `http://localhost:3000`.
 - **Response**:
   - Success: `{ "msg": { "username": "<email>" } }`
   - Error: `{ "error": "Invalid token", ... }`
+
+#### 3. Google OAuth Flow
+
+##### Start Authentication
+
+- **Endpoint**: `GET /auth/google`
+- **Description**: Initiates the Google OAuth login flow.
+
+##### Callback
+
+- **Endpoint**: `GET /auth/google/callback`
+- **Description**: Callback URL for Google OAuth. Returns a JWT token upon success.
+- **Response**:
+  - Success: `{ "Token": "<jwt_token>", "message": "Google authentication successful" }`
+  - Error: Redirects to failure endpoint.
+
+##### Failure
+
+- **Endpoint**: `GET /auth/google/failure`
+- **Response**: `{ "error": "Google OAuth authentication failed" }`
