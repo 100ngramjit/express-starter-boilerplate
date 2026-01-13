@@ -3,4 +3,7 @@ node_modules/
 .DS_Store
 *.pem
 .env*
+!.env.example
 package-lock.json
+
+/generated/prisma

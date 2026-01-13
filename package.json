@@ -4,20 +4,34 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --runInBand --forceExit",
+    "test:watch": "jest --watch --runInBand",
     "start": "node index.js",
-    "dev": "node --watch auth.js"
+    "dev": "node --watch auth.js",
+    "dev:db": "node --watch assignment-db.js",
+    "db:migrate": "npx prisma migrate dev",
+    "db:reset": "npx prisma migrate reset --force",
+    "db:studio": "npx prisma studio"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@prisma/adapter-pg": "^7.2.0",
+    "@prisma/client": "^7.2.0",
+    "bcryptjs": "^3.0.3",
     "dotenv": "^17.2.3",
     "express": "^4.19.2",
     "express-session": "^1.18.2",
     "jsonwebtoken": "^9.0.2",
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",
+    "pg": "^8.16.3",
     "zod": "^3.23.4"
+  },
+  "devDependencies": {
+    "jest": "^30.2.0",
+    "prisma": "^7.2.0",
+    "supertest": "^7.2.2"
   }
 }
